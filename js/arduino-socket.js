@@ -1,11 +1,8 @@
-var arduinoConnected = false;
-
 var startArduino = function (server) {
   var serialport   = require("serialport");
   var SerialPort   = serialport.SerialPort
   var portName     = '/dev/ttyACM0';
   var myPort = new SerialPort(portName, {
-    // baudrate: 9600,
     baudrate: 38400,
     parser: serialport.parsers.readline("\r\n")
   }, false);
@@ -13,9 +10,7 @@ var startArduino = function (server) {
   myPort.open(function (error) {
     if(error) {
       console.log(error);
-      arduinoConnected = false;
     } else {
-      arduinoConnected = true;
       establishSocketConnection();
     }
   });
@@ -70,16 +65,12 @@ var startArduino = function (server) {
 
       myPort.on('data', function (data) {
         // console.log("data recieved...", data, "| counter: ", counter);
+        // console.log(data);
         var dataArray = data.split(",");
         // var x    = parseFloat(dataArray[0]);
         var y    = parseFloat(dataArray[1]);
-        // var z    = parseFloat(dataArray[2]);
-        // var fsr1 = parseFloat(dataArray[3]);
-        // var fsr2 = parseFloat(dataArray[4]);
-        // console.log("x: ", x, "y: ", y, "z: ", z);
-        
-        // console.log("y: ", x);
-        // console.log("z: ", x);
+        var z    = parseFloat(dataArray[2]);
+
         // steady state:
         // x: 0.10 y:  2.40 z: -10.50
 
@@ -89,27 +80,45 @@ var startArduino = function (server) {
         // Right
         // x: 0.20 y: 7.50 z: -7.50
 
-        // Just use Y
-        // if y <-3.50 -> left
-        // if y > 8.50
-
-        if (y<-3.50) {
-          serialData = {
+        if (y<-2.50) { // Left
+          // console.log("left");
+          serialData = { 
             left  : true,
             right : false,
-            up    : false
+            up    : false,
+            down  : false
           };
-        } else if (y> 8.50) {
+        } else if (y> 8.50) { // Right
+          // console.log("right");
           serialData = {
             left  : false,
             right : true,
-            up    : false
+            up    : false,
+            down  : false
           };
-        } else {
+        } else if (z>-3.50) { // Up
+          // console.log("up");
           serialData = {
             left  : false,
             right : false,
-            up    : false
+            up    : true,
+            down  : false
+          };
+        } else if (z<-22.50) {  // Down
+          // console.log("------------------------down");
+          serialData = {
+            left  : false,
+            right : false,
+            up    : false,
+            down  : true
+          };
+        } else {
+          // console.log("---");
+          serialData = {
+            left  : false,
+            right : false,
+            up    : false,
+            down  : false
           };
         }
 
@@ -130,12 +139,6 @@ var startArduino = function (server) {
       };
 
     });
-
+  }
 }
-return arduinoConnected;
-}
-
-// module.exports = arduinoSocket;
 exports.startArduino = startArduino;
-exports.arduinoConnected = arduinoConnected;
-// module.exports = arduinoConnected;
