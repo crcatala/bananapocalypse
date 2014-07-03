@@ -1,3 +1,5 @@
+// need to include your socket/glove module in main html file, as global window, so can have access here.
+// var glove = new gloveController();
 
     var game = new Phaser.Game(800, 566, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
 
@@ -57,19 +59,34 @@
 
 //  controls
         cursors = game.input.keyboard.createCursorKeys();
-        keyboard = game.input.keyboard;
+        // keyboard = game.input.keyboard;
         // jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         // restartKey = game.input.keyboard.addKey(Phaser.Keyboard.esc);
 
     }
 
+var mockLeft = false;
+var counter = 0;
+
+// setInterval(function (){
+//     if (mockLeft) { mockLeft = false;} else {mockLeft = true;}
+// },3000);
+
     function update() {
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(bananas, platforms);
 
+        // counter+=1;
+        // if (counter%10 ==0) {console.log("counter: ", counter);}
+        // From this test, it look like update() is run every 10ms, or 100 times / second. perfect!
+
         player.body.velocity.x = 0;
 
         if (cursors.left.isDown && cursors.up.isDown) {
+            // if glove.left....if glove.right. And behind the scenes will check. might be easiest for user.
+            // if glove.upSpike --> impulse
+            // for continuous up, just hold up above 15 degree angle.
+
             player.body.velocity.x = -150;
             player.frame = 0
         }
@@ -77,14 +94,19 @@
             player.body.velocity.x = 150;
             player.frame = 3
         }
-        else if (cursors.left.isDown) {
+        else if ((cursors.left.isDown) 
+            || (PowerGlove.left)) {
             player.body.velocity.x = -150;
             player.animations.play('left');
         }
-        else if (cursors.right.isDown) {
+        // } else if (mockLeft) {
+        //     player.body.velocity.x = -150;
+        //     player.animations.play('left');
+        // }
+        else if ((cursors.right.isDown) 
+            || (PowerGlove.right)) {
             player.body.velocity.x = 150;
             player.animations.play('right');
-
         }
         else {
             if (player.animations.stop() && player.frame === 2 || 3) {

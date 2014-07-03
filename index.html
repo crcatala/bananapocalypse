@@ -2,18 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-    <title>Bananapocalypse!</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-    <reference path="../../phaser/Phaser/system/input/Keyboard.ts"></reference>
+  <title>Bananapocalypse!</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  <reference path="../../phaser/Phaser/system/input/Keyboard.ts"></reference>
 
-    <script type="text/javascript" src="build/phaser.min.js"></script>
+  <script type="text/javascript" src="build/phaser.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="js/socket.io.js"></script>
+
 </head>
 <body>
-    <div id='title'>Bananapocalypse!</div>
-    <div id='subtitle'>This S*** is Bananas</div>
+  <div id='title'>Bananapocalypse!</div>
+  <div id='subtitle'>This S*** is Bananas</div>
 
-    <div id='game'></div>
-        <script type="text/javascript" src="js/main.js"></script>
+  <div id='game'></div>
+  <div id="glove-controls">
+  <button id="start-button" type="button" class="button button-style2" value="Start">Connect Glove</button>
+  <button id="stop-button" type="button" class="button button-style1" value="Stop">Disconnect Glove</button>
+  </div>
+
+  <script type="text/javascript" src="js/socket-client.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

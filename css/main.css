@@ -1,3 +1,7 @@
+/** {
+  border: 1px solid red;
+}*/
+
 body {
   background-color: #151515;
 }
@@ -25,3 +29,48 @@ body {
   height: 566px;
   margin: auto;
 }
+
+#glove-controls {
+  width: 600px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+button {
+  display: inline-block;
+  background: #444;
+  padding: 20px 20px 20px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  border-radius: 0.35em;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  -moz-transition: all .25s ease-in-out;
+  -webkit-transition: all .25s ease-in-out;
+  -o-transition: all .25s ease-in-out;
+  -ms-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+
+#start-button {
+  text-align: center;
+  cursor: pointer;
+  background: #6daa4e;
+  color: #fff;
+}
+#start-button:hover{ background-color: #99bb7e; }
+#start-button:active{ background-color: #71ad41; }
+
+#stop-button {
+  cursor: pointer;
+  text-align: center;
+  background: #e97770;
+  color: #fff;
+}
+#stop-button:hover { background-color: #f98780; }
+#stop-button:active { background-color: #d96760; }
